@@ -16,7 +16,7 @@ OUT = PROJECT_ROOT / "SLIDES.pdf"
 
 # ── fill before submission ───────────────────────────────────────────────
 ACCOUNT_ID = "PA3KGE66JM72"
-RESULTS_LINE = "As of Thu close: equity $99,986 (flat) · 9 trades · 67% win rate · max drawdown ~$139 · still trading to the deadline"
+RESULTS_LINE = "FINAL: equity $100,018 (green) · 10 trades, all realized · 70% win rate · max drawdown ~$139 · flattened itself before the deadline"
 
 AV = "/System/Library/Fonts/Avenir Next.ttc"
 CH = "/System/Library/Fonts/Supplemental/Charter.ttc"

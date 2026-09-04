@@ -20,12 +20,12 @@ OUT = PROJECT_ROOT / "WRITEUP.pdf"
 
 # ── fill these before submission ─────────────────────────────────────────
 ACCOUNT_ID = "PA3KGE66JM72"
-AS_OF = "Sep 3, 4:00 PM ET (Thu close)"     # snapshot time — the agent keeps trading after
+AS_OF = "FINAL — book flat, all P&amp;L realized (Sep 4, 10:01 ET)"     # snapshot time — the agent keeps trading after
 RESULTS = {
-    "EQUITY": "$99,986",
-    "COMPETITION P&amp;L": "−$14 (−0.01%)",
-    "TRADES": "9 closed",
-    "WIN RATE": "67%",
+    "EQUITY": "$100,018.09",
+    "COMPETITION P&amp;L": "+$18 (green)",
+    "TRADES": "10 (all closed)",
+    "WIN RATE": "70%",
     "MAX DRAWDOWN": "~$139",
 }
 
@@ -121,8 +121,8 @@ story.append(Table(res_cells, colWidths=[W / 5] * 5, style=TableStyle([
 ])))
 story.append(Spacer(1, 2))
 story.append(Paragraph(
-    f"Snapshot as of {AS_OF} — the agent continues trading autonomously through the "
-    f"submission deadline. Authoritative P&amp;L: paper account {ACCOUNT_ID} · "
+    f"Results are {AS_OF} — flattened autonomously by the wind-down protocol one hour "
+    f"before the deadline. Authoritative record: paper account {ACCOUNT_ID} · "
     "live view on the dashboard.", small))
 
 # ── strategy ─────────────────────────────────────────────────────────────
