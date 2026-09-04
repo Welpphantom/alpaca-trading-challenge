@@ -16,7 +16,8 @@ OUT = PROJECT_ROOT / "SLIDES.pdf"
 
 # ── fill before submission ───────────────────────────────────────────────
 ACCOUNT_ID = "PA3KGE66JM72"
-RESULTS_LINE = "FINAL: equity $100,018 (green) · 10 trades, all realized · 70% win rate · max drawdown ~$139 · flattened itself before the deadline"
+RESULTS_LINE1 = "FINAL: equity $100,018 (green) · 10 trades, all realized · 70% win rate"
+RESULTS_LINE2 = "max drawdown ~$139 · flattened its own book before the deadline"
 
 AV = "/System/Library/Fonts/Avenir Next.ttc"
 CH = "/System/Library/Fonts/Supplemental/Charter.ttc"
@@ -162,10 +163,13 @@ d.bullets([
     ("Live dashboard:", "equity curve, position book, and the full decision journal — Streamlit"),
 ])
 c.setFillColor(LIGHT)
-c.roundRect(M, 60, W - 2 * M, 54, 8, stroke=0, fill=1)
+c.roundRect(M, 55, W - 2 * M, 72, 8, stroke=0, fill=1)
 c.setFont("Avenir-Demi", 15)
 c.setFillColor(NAVY)
-c.drawCentredString(W / 2, 81, RESULTS_LINE)
+c.drawCentredString(W / 2, 98, RESULTS_LINE1)
+c.setFont("Avenir-Medium", 13)
+c.setFillColor(SLATE)
+c.drawCentredString(W / 2, 72, RESULTS_LINE2)
 d.footer(5)
 d.save()
 
