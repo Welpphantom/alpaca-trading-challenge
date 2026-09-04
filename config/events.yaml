@@ -1,0 +1,47 @@
+# Static macro-event calendar for the competition window (all times ET).
+# Deterministic baseline — the research agent's daily LLM sweep adds to this
+# (Fed speakers, surprises) but can never remove entries. Dates flagged
+# `verify: true` must be confirmed against a live calendar before that day.
+#
+# effect values the strategy agent honors:
+#   no_entry_before  — block new entries until this ET time
+#   delta_max        — cap short delta for the day (overrides target if lower)
+#   size_multiplier  — scale qty on all new entries
+
+events:
+  - date: 2026-08-28
+    name: Jackson Hole — Fed Chair Warsh first keynote (per research sweep 8/27)
+    time_et: "10:00"
+    verify: true
+    effect: {no_entry_before: "11:00", delta_max: 0.10, size_multiplier: 0.5}
+
+  - date: 2026-08-31
+    name: Month-end rebalancing flows
+    time_et: null            # all-day flow effect, no print
+    verify: false
+    effect: {size_multiplier: 0.75}
+
+  - date: 2026-09-01
+    name: ISM Manufacturing
+    time_et: "10:00"
+    verify: true
+    effect: {no_entry_before: "10:30", delta_max: 0.12}
+
+  - date: 2026-09-02
+    name: ADP employment
+    time_et: "08:15"
+    verify: true
+    effect: {no_entry_before: "10:00", delta_max: 0.12}
+
+  - date: 2026-09-03
+    name: Initial jobless claims
+    time_et: "08:30"
+    verify: true
+    effect: {no_entry_before: "10:00"}
+
+  - date: 2026-09-04
+    name: Nonfarm payrolls — JUDGING DAY (submissions close 11:00 ET)
+    time_et: "08:30"
+    verify: true
+    effect: {no_entry_before: "09:45", delta_max: 0.10, size_multiplier: 0.5}
+    note: Book winds down Thu Sep 3 PM; optional post-NFP 0DTE crush trade only.

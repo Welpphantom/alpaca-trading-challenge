@@ -1,0 +1,62 @@
+# Strategy & risk configuration. The risk agent treats everything under
+# `risk` as hard limits — code enforces them, the LLM never overrides them.
+
+account:
+  starting_equity: 100000        # judging account requirement
+
+universe:
+  premium_selling: [SPY, QQQ, XSP]   # core theta engine (XSP = 1/10th SPX, cash-settled)
+  catalyst_sleeve: []                # filled daily by the research agent (earnings/news)
+
+strategy:
+  core:
+    structure: vertical_credit_spread   # graduate to iron condors once MLEG verified
+    dte_min: 0
+    dte_max: 5                          # everything must expire by Fri Sep 4
+    target_short_delta_put: 0.15        # ~1-sigma short strike
+    target_short_delta_call: 0.20       # call skew is flatter; closer strike to be worth selling
+    wing_width_max_usd: 500             # max loss per spread (1 lot)
+    min_credit_frac: 0.10               # credit floor at the 15-delta reference;
+                                        # scaled down proportionally when event
+                                        # caps tighten the delta target
+    profit_take_pct: 0.60               # close at 60% of max credit
+    stop_loss_multiple: 2.0             # close if loss reaches 2x credit received
+  catalyst:
+    structure: debit_spread             # directional views, risk capped at debit paid
+    max_debit_per_trade_usd: 750
+  event_awareness:                      # research agent applies these on macro-event days
+    calendar_file: config/events.yaml
+    event_day_delta_max: 0.12           # sell further out on event days
+    event_day_size_multiplier: 0.5
+    morning_print_no_entry_before_et: "10:00"   # 8:30 ET print days: wait for IV to settle
+
+risk:
+  max_daily_loss_usd: 2000        # 2% of equity — kill switch for the day (blocks new risk only)
+  max_total_drawdown_usd: 5000    # 5% — kill switch for the competition (flatten + freeze)
+  max_open_risk_usd: 10000        # sum of defined max losses across open positions
+  max_risk_per_trade_usd: 1500
+  max_positions: 8
+  max_contracts_per_order: 10
+  no_new_risk_into_weekend: true  # nothing opened Friday that survives the weekend
+  trading_hours_only: true
+  entry_buffer_open_minutes: 15   # no new entries in opening chaos
+  entry_buffer_close_minutes: 30  # no new entries into gamma hour
+  # Kill switches fire only on sustained, sanity-checked breaches — never a single
+  # reading. Invalid data pauses the clock (and alerts); it never triggers action.
+  debounce:
+    daily_loss: {readings: 2, min_span_seconds: 300}
+    position_stop: {readings: 2, min_span_seconds: 120}
+    drawdown_flatten: {readings: 3, min_span_seconds: 900}
+  sanity:
+    max_leg_spread_pct_of_mid: 0.40   # wider than this = thin book, reading discarded
+    max_quote_age_seconds: 60
+    max_underlying_jump_pct: 0.02     # >2% move between readings = suspect until confirmed
+    max_equity_disagreement_usd: 1000 # broker equity vs our own marks must agree
+
+reporting:
+  timezone: America/New_York
+  morning_brief_et: "09:00"
+  eod_report_et: "16:30"
+
+journal:
+  db_path: data/journal.db
