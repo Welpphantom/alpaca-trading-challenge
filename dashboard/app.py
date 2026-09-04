@@ -92,7 +92,12 @@ def equity_history() -> pd.DataFrame | None:
             "time": pd.to_datetime(h.timestamp, unit="s", utc=True),
             "equity": h.equity,
         }).dropna()
-        return df[df["equity"] > 0]
+        # competition window only: the endpoint returns creation-time
+        # accounting ghosts for timestamps before the account existed
+        start = pd.Timestamp("2026-08-28T15:00:00Z")  # kickoff 11:00 ET
+        df = df[(df["time"] >= start)
+                & (df["equity"] > 95_000) & (df["equity"] < 105_000)]
+        return df
     except Exception:
         return None
 
