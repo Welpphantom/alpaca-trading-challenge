@@ -47,5 +47,5 @@ dashboard showing the live account and the agent's complete decision journal.
 
 **Links:**
 - Repo: https://github.com/Welpphantom/alpaca-trading-challenge
-- Demo (dashboard): [STREAMLIT URL — fill before submitting]
+- Demo (dashboard): https://alpaca-trading-challenge-keel9qmcafzafzltashrzw.streamlit.app/
 - Alpaca paper account ID: PA3KGE66JM72
