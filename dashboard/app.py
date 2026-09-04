@@ -40,12 +40,14 @@ def get_keys() -> tuple[str, str] | None:
 
 
 @st.cache_resource
-def trading_client():
-    keys = get_keys()
-    if not keys:
-        return None
+def _client(key: str, secret: str):
     from alpaca.trading.client import TradingClient
-    return TradingClient(keys[0], keys[1], paper=True)
+    return TradingClient(key, secret, paper=True)
+
+
+def trading_client():
+    keys = get_keys()  # never cache a missing-keys result
+    return _client(*keys) if keys else None
 
 
 @st.cache_data(ttl=60)
